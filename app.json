@@ -1,14 +1,15 @@
 {
   "expo": {
-    "name": "TS Trivia",
+    "name": "Swiftie Trivia",
     "slug": "TS-trivia",
     "version": "1.0.0",
     "orientation": "portrait",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#160427",
     "newArchEnabled": true,
     "splash": {
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#160427"
     },
     "ios": {
       "supportsTablet": true
