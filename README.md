@@ -33,3 +33,18 @@ Pushing to `main` or any `claude/**` branch triggers the
 4. Uploads the APK as a build artifact and publishes it to a GitHub Release.
 
 You can also trigger it manually from the **Actions** tab (`workflow_dispatch`).
+
+### APK size
+
+The build is tuned for the **Samsung Galaxy S24 Ultra** (and other `arm64-v8a`
+devices) only. The Gradle build passes:
+
+- `reactNativeArchitectures=arm64-v8a` — drops the `armeabi-v7a`, `x86`, and
+  `x86_64` native libraries, which account for most of an unoptimized
+  (~56 MB) build.
+- `android.enableMinifyInReleaseBuilds=true` — R8 code shrinking.
+- `android.enableShrinkResourcesInReleaseBuilds=true` — strips unused resources.
+- `expo.useLegacyPackaging=true` — compresses native libraries inside the APK.
+
+If you need to support 32-bit or x86 devices, add the relevant ABIs back to
+`-PreactNativeArchitectures` in [`build-apk.yml`](.github/workflows/build-apk.yml).
