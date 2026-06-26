@@ -5,10 +5,11 @@
 
 import {
   ALBUMS,
-  SONGS,
+  ALL_SONGS,
   SOUNDTRACK_SONGS,
   MOVIES,
-  albumById,
+  MATCH_ALBUMS,
+  matchAlbumById,
 } from './data/taylorSwift';
 import { LUCKY_NUMBER } from './theme';
 
@@ -41,9 +42,9 @@ const roundLength = (pool) => Math.min(LUCKY_NUMBER, pool.length);
 // ---- question builders -----------------------------------------------------
 
 function buildSongToAlbum() {
-  const albumNames = ALBUMS.map((a) => a.name);
-  return sample(SONGS, roundLength(SONGS)).map((song, i) => {
-    const album = albumById(song.album);
+  const albumNames = MATCH_ALBUMS.map((a) => a.name);
+  return sample(ALL_SONGS, roundLength(ALL_SONGS)).map((song, i) => {
+    const album = matchAlbumById(song.album);
     const { options, answer } = makeChoices(album.name, albumNames);
     return {
       id: `sa-${i}`,
@@ -51,7 +52,7 @@ function buildSongToAlbum() {
       prompt: song.title,
       options,
       answer,
-      note: `“${song.title}” is from ${album.name} (${album.year}).`,
+      note: `“${song.title}” is from ${album.name}.`,
     };
   });
 }

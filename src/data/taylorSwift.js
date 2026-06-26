@@ -30,6 +30,29 @@ export const ALBUMS = [
 
 export const albumById = (id) => ALBUMS.find((a) => a.id === id);
 
+// Answer set for the Song → Album game. The 12 studio albums PLUS the
+// deluxe / 3am / Anthology / "Taylor's Version" editions, so every released
+// song maps to a distinct album bucket and every song is playable.
+const STUDIO_MATCH = ALBUMS.map((a) => ({ id: a.id, name: a.name }));
+export const MATCH_ALBUMS = [
+  ...STUDIO_MATCH,
+  { id: 'debut-dlx',         name: 'Taylor Swift (Deluxe)' },
+  { id: 'fearless-plat',     name: 'Fearless (Platinum Edition)' },
+  { id: 'fearless-tv',       name: "Fearless (Taylor's Version)" },
+  { id: 'speaknow-dlx',      name: 'Speak Now (Deluxe)' },
+  { id: 'speaknow-tv',       name: "Speak Now (Taylor's Version)" },
+  { id: 'red-dlx',           name: 'Red (Deluxe)' },
+  { id: 'red-tv',            name: "Red (Taylor's Version)" },
+  { id: '1989-dlx',          name: '1989 (Deluxe)' },
+  { id: '1989-tv',           name: "1989 (Taylor's Version)" },
+  { id: 'folklore-dlx',      name: 'folklore (deluxe)' },
+  { id: 'evermore-dlx',      name: 'evermore (deluxe)' },
+  { id: 'midnights-3am',     name: 'Midnights (3am Edition)' },
+  { id: 'midnights-tildawn', name: 'Midnights (Til Dawn Edition)' },
+  { id: 'ttpd-anth',         name: 'The Tortured Poets Department: The Anthology' },
+];
+export const matchAlbumById = (id) => MATCH_ALBUMS.find((a) => a.id === id);
+
 // Full standard-edition tracklists, mapped to their album. Featured-artist
 // credits are dropped from the title to keep the prompt focused on the song.
 export const SONGS = [
@@ -230,40 +253,114 @@ export const SONGS = [
   { title: 'The Life of a Showgirl', album: 'showgirl' },
 ];
 
+// Bonus tracks that are unique to a deluxe / 3am / Til Dawn / Anthology
+// edition (the standard editions are in SONGS above). Each maps to its own
+// edition bucket so it shows up under that exact album name in the game.
+export const EXTENDED_TRACKS = [
+  // Taylor Swift (Deluxe / reissue) — 2006
+  { title: "I'm Only Me When I'm with You", album: 'debut-dlx' },
+  { title: 'Invisible', album: 'debut-dlx' },
+  { title: 'A Perfectly Good Heart', album: 'debut-dlx' },
+
+  // Fearless (Platinum Edition) — 2009
+  { title: 'Jump Then Fall', album: 'fearless-plat' },
+  { title: 'Untouchable', album: 'fearless-plat' },
+  { title: 'Come In with the Rain', album: 'fearless-plat' },
+  { title: 'Superstar', album: 'fearless-plat' },
+  { title: 'The Other Side of the Door', album: 'fearless-plat' },
+  { title: 'Forever & Always (Piano Version)', album: 'fearless-plat' },
+
+  // Speak Now (Deluxe) — 2010
+  { title: 'Ours', album: 'speaknow-dlx' },
+  { title: 'If This Was a Movie', album: 'speaknow-dlx' },
+  { title: 'Superman', album: 'speaknow-dlx' },
+
+  // Red (Deluxe) — 2012
+  { title: 'The Moment I Knew', album: 'red-dlx' },
+  { title: 'Come Back... Be Here', album: 'red-dlx' },
+  { title: 'Girl at Home', album: 'red-dlx' },
+
+  // 1989 (Deluxe) — 2014
+  { title: 'Wonderland', album: '1989-dlx' },
+  { title: 'You Are in Love', album: '1989-dlx' },
+  { title: 'New Romantics', album: '1989-dlx' },
+
+  // folklore (deluxe) — 2020
+  { title: 'the lakes', album: 'folklore-dlx' },
+
+  // evermore (deluxe) — 2021
+  { title: 'right where you left me', album: 'evermore-dlx' },
+  { title: "it's time to go", album: 'evermore-dlx' },
+
+  // Midnights (3am Edition) — 2022
+  { title: 'The Great War', album: 'midnights-3am' },
+  { title: 'Bigger Than the Whole Sky', album: 'midnights-3am' },
+  { title: 'Paris', album: 'midnights-3am' },
+  { title: 'High Infidelity', album: 'midnights-3am' },
+  { title: 'Glitch', album: 'midnights-3am' },
+  { title: "Would've, Could've, Should've", album: 'midnights-3am' },
+  { title: 'Dear Reader', album: 'midnights-3am' },
+
+  // Midnights (Til Dawn Edition) — 2023
+  { title: 'Hits Different', album: 'midnights-tildawn' },
+
+  // The Tortured Poets Department: The Anthology (second half) — 2024
+  { title: 'The Black Dog', album: 'ttpd-anth' },
+  { title: 'imgonnagetyouback', album: 'ttpd-anth' },
+  { title: 'The Albatross', album: 'ttpd-anth' },
+  { title: 'Chloe or Sam or Sophia or Marcus', album: 'ttpd-anth' },
+  { title: 'How Did It End?', album: 'ttpd-anth' },
+  { title: 'So High School', album: 'ttpd-anth' },
+  { title: 'I Hate It Here', album: 'ttpd-anth' },
+  { title: 'thanK you aIMee', album: 'ttpd-anth' },
+  { title: "I Look in People's Windows", album: 'ttpd-anth' },
+  { title: 'The Prophecy', album: 'ttpd-anth' },
+  { title: 'Cassandra', album: 'ttpd-anth' },
+  { title: 'Peter', album: 'ttpd-anth' },
+  { title: 'The Bolter', album: 'ttpd-anth' },
+  { title: 'Robin', album: 'ttpd-anth' },
+  { title: 'The Manuscript', album: 'ttpd-anth' },
+];
+
 // Brand-new "From the Vault" songs first released on the re-recorded
-// "Taylor's Version" albums, mapped to that album's era.
+// "Taylor's Version" albums, mapped to that re-recording's edition bucket.
 export const VAULT_TRACKS = [
   // Fearless (Taylor's Version) — 2021
-  { title: 'You All Over Me', album: 'fearless' },
-  { title: 'Mr. Perfectly Fine', album: 'fearless' },
-  { title: 'We Were Happy', album: 'fearless' },
-  { title: "That's When", album: 'fearless' },
-  { title: "Don't You", album: 'fearless' },
-  { title: 'Bye Bye Baby', album: 'fearless' },
+  { title: 'You All Over Me', album: 'fearless-tv' },
+  { title: 'Mr. Perfectly Fine', album: 'fearless-tv' },
+  { title: 'We Were Happy', album: 'fearless-tv' },
+  { title: "That's When", album: 'fearless-tv' },
+  { title: "Don't You", album: 'fearless-tv' },
+  { title: 'Bye Bye Baby', album: 'fearless-tv' },
   // Red (Taylor's Version) — 2021
-  { title: 'Better Man', album: 'red' },
-  { title: 'Nothing New', album: 'red' },
-  { title: 'Babe', album: 'red' },
-  { title: 'Message in a Bottle', album: 'red' },
-  { title: 'I Bet You Think About Me', album: 'red' },
-  { title: 'Forever Winter', album: 'red' },
-  { title: 'Run', album: 'red' },
-  { title: 'The Very First Night', album: 'red' },
-  { title: 'All Too Well (10 Minute Version)', album: 'red' },
+  { title: 'Better Man', album: 'red-tv' },
+  { title: 'Nothing New', album: 'red-tv' },
+  { title: 'Babe', album: 'red-tv' },
+  { title: 'Message in a Bottle', album: 'red-tv' },
+  { title: 'I Bet You Think About Me', album: 'red-tv' },
+  { title: 'Forever Winter', album: 'red-tv' },
+  { title: 'Run', album: 'red-tv' },
+  { title: 'The Very First Night', album: 'red-tv' },
+  { title: 'All Too Well (10 Minute Version)', album: 'red-tv' },
   // Speak Now (Taylor's Version) — 2023
-  { title: 'Electric Touch', album: 'speaknow' },
-  { title: 'When Emma Falls in Love', album: 'speaknow' },
-  { title: 'I Can See You', album: 'speaknow' },
-  { title: 'Castles Crumbling', album: 'speaknow' },
-  { title: 'Foolish One', album: 'speaknow' },
-  { title: 'Timeless', album: 'speaknow' },
+  { title: 'Electric Touch', album: 'speaknow-tv' },
+  { title: 'When Emma Falls in Love', album: 'speaknow-tv' },
+  { title: 'I Can See You', album: 'speaknow-tv' },
+  { title: 'Castles Crumbling', album: 'speaknow-tv' },
+  { title: 'Foolish One', album: 'speaknow-tv' },
+  { title: 'Timeless', album: 'speaknow-tv' },
   // 1989 (Taylor's Version) — 2023
-  { title: '"Slut!"', album: '1989' },
-  { title: "Say Don't Go", album: '1989' },
-  { title: "Now That We Don't Talk", album: '1989' },
-  { title: 'Suburban Legends', album: '1989' },
-  { title: 'Is It Over Now?', album: '1989' },
+  { title: '"Slut!"', album: '1989-tv' },
+  { title: "Say Don't Go", album: '1989-tv' },
+  { title: "Now That We Don't Talk", album: '1989-tv' },
+  { title: 'Suburban Legends', album: '1989-tv' },
+  { title: 'Is It Over Now?', album: '1989-tv' },
 ];
+
+// Every Taylor-performed song that maps to an album bucket — standard
+// tracks, deluxe/edition bonus tracks, and Taylor's Version vault songs.
+// This is the full pool for the Song → Album matching game.
+export const ALL_SONGS = [...SONGS, ...EXTENDED_TRACKS, ...VAULT_TRACKS];
 
 // Songs Taylor wrote/recorded for films (not on a standard studio album),
 // with the movie they were made for and any featured collaborator.
